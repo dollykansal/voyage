@@ -208,20 +208,37 @@ oTable.addColumn(new sap.ui.table.Column({
 var calcTxt = new sap.ui.commons.TextField({   
     	id: "txtCalc",
     	liveChange : function(oEvent){
-    		sap.ui.getCore().getControl("spdTxt").setText(oEvent.getParameter("liveValue"));
+//    		var idx = oTable.getSelectedIndex();
+//    		console.log(this);
+//    		console.log("index is ",oTable.getModel().getData()['modelData']);
+//    		sap.ui.getCore().getControl("TextView").setText(oEvent.getParameter("liveValue"));
+//    		sap.ui.getCore().getControl("spdTxt").setText(oEvent.getParameter("liveValue"));
+//    		sap.ui.getCore().getControl("spdTxt").setValue(oEvent.getParameter("liveValue"));
+//    		this.setValue(oEvent.getParameter("liveValue"));
+//    		console.log(sap.ui.getCore().getControl("spdTxt"));
+//    		console.log("this",this);
+    		this.setValue(oEvent.getParameter("liveValue"));
     		//get index of the row being changed
     		//set this value there
-    		sap.ui.getCore().getModel().setData(oData);
-    		console.log(oEvent.getParameter("liveValue"));
-    		console.log("value",this.getValue());
+    		//sap.ui.getCore().getModel().setData(oData);
+//    		console.log(oEvent.getParameter("liveValue"));
+//    		console.log("value",this.getValue());
+//    		oModel.setProperty("colCalc",oEvent.getParameter("liveValue"));
+    		var spdTxt = new sap.ui.commons.TextView({ text: oEvent.getParameter("liveValue") });
+    		setTimeout(function(){
+    			sap.ui.getCore().getControl("colSpd").setTemplate(spdTxt)  	;}		
+    		,10);
+    		console.log(this.getValue());
     	}
     });
 var spdTxt = new sap.ui.commons.TextView("spdTxt",{ text: calcTxt.getValue() });
-oTable.attachCellClick(function(oEvent) {
-	var currentRowContext = oEvent.getParameter("rowIndex");
-	var value = oModel.getProperty("colCalc", currentRowContext);
-});
-console.log("out value",calcTxt.getValue());
+//oTable.attachCellClick(function(oEvent) {
+//	oModel.refresh();
+//	var currentRowContext = oEvent.getParameter("rowIndex");
+//	var value = oModel.getProperty("colCalc", currentRowContext);
+//	console.log("current index is:",currentRowContext);
+//	console.log("value is ",value);
+//});
 oTable.addColumn(new sap.ui.table.Column("colSpd",{
 	label: new sap.ui.commons.Label({text: "Speed"}), 
 	template: spdTxt,

@@ -25,7 +25,7 @@ sap.ui.jsview("voyage1.Estimate", {
 		       //sap.ui.getCore().byId("myShell").removeAllWorksetItems();
 		       sap.ui.getCore().byId("myShell").setContent(sap.ui.getCore().byId("estViewId1"),true);
 						 
-			alert('Alert from Forward button' );
+//			alert('Alert from Forward button' );
 					}
 				});
 		

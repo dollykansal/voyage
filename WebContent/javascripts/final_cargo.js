@@ -30,6 +30,7 @@ var Cargo = function(){
 
 	//Create an instance of the table control
 	var oTableCargo = window.helper.createTable({
+		id:"cargo",
 		//title: "Cargo",
 		visibleRowCount: 1,
 		firstVisibleRow: 2,
@@ -92,7 +93,21 @@ var Cargo = function(){
 
 	//Initially sort the table
 	oTableCargo.sort(oTableCargo.getColumns()[0]);
+	oTableCargo.onAfterRendering = function() {
+		sap.ui.table.Table.prototype.onAfterRendering.apply(this, arguments);
+    	$('#cargo').droppable({
+	      drop:function(event, ui){
+	    	var modelData = oModel.getData();  
+	        var rowCount   = modelData.modelData.length;    
+	        rowCount = rowCount + 1;
+	        aDataCargo.push({account: $(ui.helper['context']).find('.sapUiAcdSectionCont').text()}); // Push data to Model  
+        	oModel.setData({modelData: aDataCargo}); // Set Model  
+        	oTableCargo.setVisibleRowCount(oTableCargo.getVisibleRowCount()+1);
+        	console.log(oTableCargo.getVisibleRowCount());
+        	oModel.refresh();
+	      }
+	    });
+	  };
 	oPanelCargo.addContent(oTableCargo);
 	return oPanelCargo;
-	//oPanelCargo.placeAt("final_cargo");
-}
+};

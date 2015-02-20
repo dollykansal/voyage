@@ -121,25 +121,31 @@
 		sap.ui.commons.Accordion.prototype.onAfterRendering.apply(this, arguments);
 //	    console.log(this.$());
 	    this.$().find('.sapUiAcdSection').draggable({
-	      connectToSortable: ".ui-sortable",
-	      revert:true,
+	      connectToDroppable: "#cargo .sapUiTableCnt",
+	      revert:"invalid",
 	      helper:"clone",
+	      cursor:"pointer",
+	      zIndex: 999999,
+	      containment:"window",
 	      start: function(event,ui){
 	        //var selectedNode = event.srcElement.innerText;
 	       // console.log(selectedNode + " dragged");
-	    	  console.log("start");
+//	    	  console.log("start");
 	    	  
 	      },
+	      drag:function(event, ui) {
+//	    	  console.log("dragging");
+	    	  $("div.sapUiAcdSectionHdr").parent().parent().parent().css("overflow","visible");
+	      },
 	      stop: function(event, ui){
-	        console.log("drag stops");
+//	        console.log("drag stops");
 //	        console.log(ui);
-	        console.log(ui);
+//	        console.log(ui);
 	        //Very important line, helps to find data set
 //	        $(temp1.helper['context']).find('.sapUiAcdSectionCont').text()
 	      }
 	    });
-	  }
+	  };
 	return oAccordion;
 	//oPanelD.placeAt("demandLeft");
-
-}
+};

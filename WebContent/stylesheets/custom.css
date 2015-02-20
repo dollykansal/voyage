@@ -27,6 +27,9 @@ padding-bottom: 0px;
 	box-shadow: 5px 7px 10px #000000!important;
 	background: #x000FFF;
 }
+.ui-draggable-dragging {
+    z-index:99999;
+}
 /* #vesselmode_1{
 top: 23px;
 width: 25px;

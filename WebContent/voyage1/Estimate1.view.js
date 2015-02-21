@@ -28,8 +28,8 @@ sap.ui.jsview("voyage1.Estimate1", {
 		var cargo = new Cargo();
 		//var treetable = new TreeTableHelper();
 		var tblPortRot = new TblPortRot();
-		oLayoutM.createRow(cargo,{height: "150px"} );
-		oLayoutM.createRow(tblPortRot,{height: "250px"} ); //{height: "300px"}, 
+		oLayoutM.createRow(cargo,{height: "auto"} );
+		oLayoutM.createRow(tblPortRot,{height: "300px"} ); //{height: "300px"}, 
 		
 		var oLayoutH = new sap.ui.commons.layout.MatrixLayout({
 				id : "matrix2",layoutFixed : true,

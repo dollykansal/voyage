@@ -32,19 +32,28 @@ var Cargo = function(){
 	var oTableCargo = window.helper.createTable({
 		id:"cargo",
 		//title: "Cargo",
-		visibleRowCount: 1,
-		firstVisibleRow: 2,
+		visibleRowCount: 3,
+//		firstVisibleRow: 1,
 		toolbar: new sap.ui.commons.Toolbar({
 			items: [ 
 			        new sap.ui.commons.Button({text: "Clear", press: function() { alert("Clear Button pressed!"); }}),
-			        new sap.ui.commons.Button({text: "Append", press: function() { alert("Append Button pressed!"); }}),
+			        new sap.ui.commons.Button({text: "Append", press: function() { 
+			    	  var modelData = oModel.getData();  
+		              var rowCount   = modelData.modelData.length;    
+		              rowCount = rowCount + 1;  
+		              aDataCargo.push({sNo: rowCount,}); // Push data to Model  
+		              oModel.setData({modelData: aDataCargo}); // Set Model  
+		              oTableCargo.visibleRowCount=oTableCargo.visibleRowCount+1;
+		              oModel.refresh();
+			        }}),
 			        new sap.ui.commons.Button({text: "Insert",style: sap.ui.commons.ButtonStyle.Accept,  press: function() { 
-			        	var modelData = oModel.getData();  
+			        	var modelData = this.getModel().getData(); 
+			        	console.log(modelData);
 			        	var rowCount   = modelData.modelData.length;    
 			        	rowCount = rowCount + 1;  
 			        	aDataCargo.push({sNo: rowCount, cargoNam: " "}); // Push data to Model  
 			        	oModel.setData({modelData: aDataCargo}); // Set Model  
-			        	oTableCargo.visibleRowCount=oTableCargo.visibleRowCount+1;
+			        	oTableCargo.setVisibleRowCount(oTableCargo.getVisibleRowCount()+1);
 			        	oModel.refresh();
 			        }}) , 
 			        new sap.ui.commons.Button({text: "Delete",style: sap.ui.commons.ButtonStyle.Reject,  press: function() {
@@ -68,12 +77,70 @@ var Cargo = function(){
 			        ]}),
 	});
 
+	var oTableCargoLoadPort = new sap.ui.commons.TextField({   
+    	id: "oTableCargoLoadPort",
+    	change : function(oEvent){
+    		var changedValue = this.getValue();
+    		var id = this.getId();
+    		var idArr = id.split("-");
+    		var rowIndex = idArr[2].split("row")[1];
+    		var model = oTableCargo.getModel();
+    		var data = oTableCargo.getModel().getData()['modelData'];
+    		data[rowIndex]['loadPort']=changedValue;
+    		model.setData({modelData: data});
+    		model.refresh();
+    		if(changedValue!=""){
+	    		var portModel = window.oPortTable.getModel();
+	    		var portModelData = portModel.getData()['modelData']; 
+	    		var rowCount   = portModelData.length;   //4 
+	    		portModelData[rowCount] = {sNo:rowCount+1,cType:"Loading", coord: changedValue};
+	        	portModel.setData({modelData: portModelData}); // Set Model  
+	        	window.oPortTable.setVisibleRowCount(window.oPortTable.getVisibleRowCount()+1);
+	        	portModel.refresh();
+    		}
+    	}
+    });
+	oTableCargoLoadPort.bindProperty("value", "loadPort");
+	var oTableCargoDisPort = new sap.ui.commons.TextField({   
+    	id: "oTableCargoDisPort",
+    	change : function(oEvent){
+    		var changedValue = this.getValue();
+    		var id = this.getId();
+    		var idArr = id.split("-");
+    		var rowIndex = idArr[2].split("row")[1];
+    		var model = oTableCargo.getModel();
+    		var data = oTableCargo.getModel().getData()['modelData'];
+    		data[rowIndex]['disPort']=changedValue;
+    		model.setData({modelData: data});
+    		model.refresh();
+    		if(changedValue!=""){
+	    		var portModel = window.oPortTable.getModel();
+	    		var portModelData = portModel.getData()['modelData']; 
+	    		var rowCount   = portModelData.length;   //4 
+	    		portModelData[rowCount] = {sNo:rowCount+1,cType:"Discharging", coord: changedValue};
+	        	portModel.setData({modelData: portModelData}); // Set Model  
+//	        	window.oPortTable.setVisibleRowCount(window.oPortTable.getVisibleRowCount()+1);
+	        	portModel.refresh();
+    		}
+    	}
+    });
+	oTableCargoDisPort.bindProperty("value", "distPort");
 	//Define the columns and the control templates to be used
 	oTableCargo.addColumn(window.helper.createColumn("sNo", "SNo", "20px", "TV"));
 	oTableCargo.addColumn(window.helper.createColumn("account", "Account", "40px", "TF"));
 	oTableCargo.addColumn(window.helper.createColumn("cargoNam", "Cargo Name", "40px", "TF"));
-	oTableCargo.addColumn(window.helper.createColumn("loadPort", "Loading Port", "40px", "TF"));
-	oTableCargo.addColumn(window.helper.createColumn("disPort", "Discharging Port", "40px", "TF"));
+	
+	oTableCargo.addColumn(new sap.ui.table.Column("loadPort",{
+		label: new sap.ui.commons.Label({text: "Loading Port"}), 
+		template: oTableCargoLoadPort,
+		width: "40px" }));
+	oTableCargo.addColumn(new sap.ui.table.Column("disPort",{
+		label: new sap.ui.commons.Label({text: "Discharging Port"}), 
+		template: oTableCargoDisPort,
+		width: "40px" }));
+	
+//	oTableCargo.addColumn(window.helper.createColumn("loadPort", "Loading Port", "40px", "TF"));
+//	oTableCargo.addColumn(window.helper.createColumn("disPort", "Discharging Port", "40px", "TF"));
 	oTableCargo.addColumn(window.helper.createColumn("qty", "Quantity", "40px", "TF"));
 	oTableCargo.addColumn(window.helper.createColumn("frt", "Frt", "40px", "TF"));
 	oTableCargo.addColumn(window.helper.createColumn("term", "Term", "40px", "TF"));
@@ -99,15 +166,15 @@ var Cargo = function(){
 	      drop:function(event, ui){
 	    	var modelData = oModel.getData();  
 	        var rowCount   = modelData.modelData.length;    
-	        rowCount = rowCount + 1;
-	        aDataCargo.push({account: $(ui.helper['context']).find('.sapUiAcdSectionCont').text()}); // Push data to Model  
+//	        rowCount = rowCount + 1;
+	        aDataCargo.push({sNo:rowCount+1,account: $(ui.helper['context']).find('.sapUiAcdSectionCont').text()}); // Push data to Model  
         	oModel.setData({modelData: aDataCargo}); // Set Model  
-        	oTableCargo.setVisibleRowCount(oTableCargo.getVisibleRowCount()+1);
-        	console.log(oTableCargo.getVisibleRowCount());
+//        	oTableCargo.setVisibleRowCount(oTableCargo.getVisibleRowCount()+1);
         	oModel.refresh();
 	      }
 	    });
 	  };
+	window.cargo = oTableCargo;
 	oPanelCargo.addContent(oTableCargo);
 	return oPanelCargo;
 };

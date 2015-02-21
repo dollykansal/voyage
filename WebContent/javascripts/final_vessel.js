@@ -12,7 +12,9 @@ var Vessel = function(oController){
 		                 ];*/
 		
 		var aDataVess = [];
-
+		this.getVesselTable = function(){
+			return oTableVess;
+		};
 //		creating table using helper
 		var oTableVess = window.helper.createTable({
 			//title: "Selected Vessel Particular",
@@ -36,7 +38,7 @@ var Vessel = function(oController){
 		}));
 		oColumn.setMenu(oCustomMenu);
 		oTableVess.addColumn(oColumn);
-
+		
 		oTableVess.addColumn(window.helper.createColumn("type", "Type", "50px", "TF"));
 		oTableVess.addColumn(window.helper.createColumn("dwt", "DWT", "50px", "TF"));
 		oTableVess.addColumn(window.helper.createColumn("draft", "Draft", "50px", "TF"));

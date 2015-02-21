@@ -153,6 +153,7 @@ var Cargo = function(){
 
 	//Create a model and bind the table rows to this model
 	var oModel = new sap.ui.model.json.JSONModel();
+	
 	oModel.setData({modelData: aDataCargo});
 	oTableCargo.setModel(oModel);
 	oTableCargo.bindRows("/modelData");

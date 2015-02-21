@@ -159,9 +159,60 @@ oPortTable.addColumn(window.helper.createColumn("sNo", "SNo", "20px", "TV"));
 oPortTable.addColumn(new sap.ui.table.Column({label: new sap.ui.commons.Label({text: "Type"}), template: oComboBox,width: "50px" }));
 //oPortTable.addColumn(window.helper.createColumn("type", "Type", "40px", "TF"));
 oPortTable.addColumn(window.helper.createColumn("coord", "Port Name or Coordinates", "60px", "TF"));
-oPortTable.addColumn(window.helper.createColumn("distEca", "Distance/(S)ECA", "40px", "TF"));
+//oPortTable.addColumn(window.helper.createColumn("distEca", "Distance/(S)ECA", "40px", "TF"));
+var oPortTableDistEca = new sap.ui.commons.TextField({   
+	id: "oPortTableDistEca",
+	change : function(oEvent){
+		var changedValue = this.getValue();
+		var id = this.getId();
+		var idArr = id.split("-");
+		var rowIndex = idArr[2].split("row")[1];
+		var model = oPortTable.getModel();
+		var data = oPortTable.getModel().getData()['modelData'];
+		data[rowIndex]['distEca']=changedValue;
+		if(data[rowIndex]['distEca']!=undefined&&data[rowIndex]['spd']!=undefined){
+			var days = (data[rowIndex]['distEca']/data[rowIndex]['spd'])/24;
+			data[rowIndex]['sea'] = Math.round(days * 100) / 100;
+		}
+		model.setData({modelData: data});
+		model.refresh();
+	}
+});
+oPortTableDistEca.bindProperty("value", "distEca");
+
+oPortTable.addColumn(new sap.ui.table.Column("distEca",{
+	label: new sap.ui.commons.Label({text: "Distance/(S)ECA"}), 
+	template: oPortTableDistEca,
+	width: "40px" }));
+
 oPortTable.addColumn(window.helper.createColumn("wf", "W.F", "40px", "TF"));
-oPortTable.addColumn(window.helper.createColumn("spd", "Spd", "40px", "TF"));
+
+var oPortTableSpd = new sap.ui.commons.TextField({   
+	id: "oPortTableSpd",
+	change : function(oEvent){
+		var changedValue = this.getValue();
+		var id = this.getId();
+		var idArr = id.split("-");
+		var rowIndex = idArr[2].split("row")[1];
+		var model = oPortTable.getModel();
+		var data = oPortTable.getModel().getData()['modelData'];
+		data[rowIndex]['spd']=changedValue;
+		if(data[rowIndex]['distEca']!=undefined&&data[rowIndex]['spd']!=undefined){
+			var days = (data[rowIndex]['distEca']/data[rowIndex]['spd'])/24;
+			data[rowIndex]['sea'] = Math.round(days * 100) / 100;
+		}
+		model.setData({modelData: data});
+		model.refresh();
+	}
+});
+oPortTableSpd.bindProperty("value", "spd");
+
+oPortTable.addColumn(new sap.ui.table.Column("spd",{
+	label: new sap.ui.commons.Label({text: "Speed"}), 
+	template: oPortTableSpd,
+	width: "40px" }));
+
+//oPortTable.addColumn(window.helper.createColumn("spd", "Spd", "40px", "TF"));
 oPortTable.addColumn(window.helper.createColumn("sea", "Sea", "40px", "TF"));
 
 /*sColumnId = 'Distance';

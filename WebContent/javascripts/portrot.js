@@ -156,7 +156,7 @@ oComboBox.bindProperty("value", "cType");
 //Define the columns and the control templates to be used
 //new sap.ui.commons.TextField().bindProperty("value", name)
 oPortTable.addColumn(window.helper.createColumn("sNo", "SNo", "20px", "TV"));
-oPortTable.addColumn(new sap.ui.table.Column({label: new sap.ui.commons.Label({text: "Type"}), template: oComboBox,width: "50px" }));
+oPortTable.addColumn(new sap.ui.table.Column({label: new sap.ui.commons.Label({text: "Type"}), template: oComboBox,width: "70px" }));
 //oPortTable.addColumn(window.helper.createColumn("type", "Type", "40px", "TF"));
 oPortTable.addColumn(window.helper.createColumn("coord", "Port Name or Coordinates", "60px", "TF"));
 //oPortTable.addColumn(window.helper.createColumn("distEca", "Distance/(S)ECA", "40px", "TF"));

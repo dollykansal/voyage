@@ -25,7 +25,7 @@ sap.ui.jsview("voyage1.Estimate1", {
 			//height: "350px"
 			});
 
-		var cargo = new Cargo();
+		var cargo = new Cargo(oController);
 		//var treetable = new TreeTableHelper();
 		var tblPortRot = new TblPortRot();
 		oLayoutM.createRow(cargo,{height: "auto"} );

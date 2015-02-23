@@ -1,33 +1,33 @@
-var summary = function(){
+		var summary = function(){
 	//Create a panel instance
 	var oPanel1 = new sap.ui.commons.Panel({
 		width : "370px"
 	});
 
 	//As alternative if no icon is desired also the following shortcut might be possible:
-	oPanel1.setText("Bunker Expense");
+	oPanel1.setText("Operation Expense");
 
 	//Create a matrix layout with 2 columns
-	var oMatrixRes = new sap.ui.commons.layout.MatrixLayout({
+	var oMatrixOper = new sap.ui.commons.layout.MatrixLayout({
 		layoutFixed : true,
 		width : '350px',
 		columns : 4
 	});
 	
-	oMatrixRes.setWidths('35%', '15%','35%', '15%');
+	oMatrixOper.setWidths('30%', '20%','30%', '20%');
 
 	//Create a simple form within the layout
 	var oLabel = new sap.ui.commons.Label({
-		text : 'FO Price'
+		text : 'Dem/Des'
 	});
 	
 	var oInput = new sap.ui.commons.TextField({
-		value : '0.00',
+		value : '-1840.00',
 		width : '100%'
 	});
 	//Create 3rd and 4th columns
 	var oLabel1 = new sap.ui.commons.Label({
-		text : 'DO Price'
+		text : 'Bunker Expense'
 	});
 	
 	var oInput1 = new sap.ui.commons.TextField({
@@ -35,20 +35,20 @@ var summary = function(){
 		width : '100%'
 	});
 	oLabel.setLabelFor(oInput);
-	oMatrixRes.createRow(oLabel, oInput, oLabel1, oInput1);
+	oMatrixOper.createRow(oLabel, oInput, oLabel1, oInput1);
 	
 	//Create a simple form within the layout
 	var oLabel = new sap.ui.commons.Label({
-		text : 'FO Consumption'
+		text : 'Add Comm.'
 	});
 	
-	var oInput = new sap.ui.commons.TextField({
-		value : '0.00',
+	var oInput = new sap.ui.commons.TextField("aComm",{
+		value: "{model>/aComm}",
 		width : '100%'
 	});
 	//Create 3rd and 4th columns
 	var oLabel1 = new sap.ui.commons.Label({
-		text : 'DO Consumption'
+		text : 'C.E.V'
 	});
 	
 	var oInput1 = new sap.ui.commons.TextField({
@@ -56,19 +56,19 @@ var summary = function(){
 		width : '100%'
 	});
 	oLabel.setLabelFor(oInput);
-	oMatrixRes.createRow(oLabel, oInput, oLabel1, oInput1);
+	oMatrixOper.createRow(oLabel, oInput, oLabel1, oInput1);
 	
 	//Create a simple form within the layout
 	var oLabel = new sap.ui.commons.Label({
-		text : 'FO Expense'
+		text : 'Brokerage'
 	});
 	var oInput = new sap.ui.commons.TextField({
-		value : '0.00',
+		value : "{model>/brkg}",
 		width : '100%'
 	});
 	//Create 3rd and 4th columns
 	var oLabel1 = new sap.ui.commons.Label({
-		text : 'DO Expense'
+		text : 'ILOHC'
 	});
 	
 	var oInput1 = new sap.ui.commons.TextField({
@@ -76,19 +76,19 @@ var summary = function(){
 		width : '100%'
 	});
 	oLabel.setLabelFor(oInput);
-	oMatrixRes.createRow(oLabel, oInput, oLabel1, oInput1);
+	oMatrixOper.createRow(oLabel, oInput, oLabel1, oInput1);
 	
 	//Create a simple form within the layout
 	var oLabel = new sap.ui.commons.Label({
-		text : 'LSFO Price'
+		text : 'Freight tax'
 	});
 	var oInput = new sap.ui.commons.TextField({
-		value : '0.00',
+		value : "{model>/frTax}",
 		width : '100%'
 	});
 	//Create 3rd and 4th columns
 	var oLabel1 = new sap.ui.commons.Label({
-		text : 'LSDO Price'
+		text : 'Ballast Bonus'
 	});
 	
 	var oInput1 = new sap.ui.commons.TextField({
@@ -96,11 +96,11 @@ var summary = function(){
 		width : '100%'
 	});
 	oLabel.setLabelFor(oInput);
-	oMatrixRes.createRow(oLabel, oInput, oLabel1, oInput1);
+	oMatrixOper.createRow(oLabel, oInput, oLabel1, oInput1);
 	
 	//Create a simple form within the layout
 	var oLabel = new sap.ui.commons.Label({
-		text : 'LSFO Consumption'
+		text : 'Liner Terms'
 	});
 	var oInput = new sap.ui.commons.TextField({
 		value : '0.00',
@@ -108,7 +108,7 @@ var summary = function(){
 	});
 	//Create 3rd and 4th columns
 	var oLabel1 = new sap.ui.commons.Label({
-		text : 'LSDO Consumption'
+		text : 'Routing Service'
 	});
 	
 	var oInput1 = new sap.ui.commons.TextField({
@@ -116,11 +116,11 @@ var summary = function(){
 		width : '100%'
 	});
 	oLabel.setLabelFor(oInput);
-	oMatrixRes.createRow(oLabel, oInput, oLabel1, oInput1);
+	oMatrixOper.createRow(oLabel, oInput, oLabel1, oInput1);
 	
 	//Create a simple form within the layout
 	var oLabel = new sap.ui.commons.Label({
-		text : 'LSFO Expense'
+		text : 'Port Charge'
 	});
 	var oInput = new sap.ui.commons.TextField({
 		value : '0.00',
@@ -128,7 +128,7 @@ var summary = function(){
 	});
 	//Create 3rd and 4th columns
 	var oLabel1 = new sap.ui.commons.Label({
-		text : 'LSDO Expense'
+		text : 'Others'
 	});
 	
 	var oInput1 = new sap.ui.commons.TextField({
@@ -136,10 +136,10 @@ var summary = function(){
 		width : '100%'
 	});
 	oLabel.setLabelFor(oInput);
-	oMatrixRes.createRow(oLabel, oInput, oLabel1, oInput1);
+	oMatrixOper.createRow(oLabel, oInput, oLabel1, oInput1);
 	
 	//Add the form to the panels content area
-	oPanel1.addContent(oMatrixRes);
+	oPanel1.addContent(oMatrixOper);
 	
 	
 	//////////////////////////////////////////bunker expense/////////////////////////////////////////////////
@@ -348,7 +348,7 @@ var summary = function(){
 	});
 	
 	var oInput1 = new sap.ui.commons.TextField({
-		value : '0.00',
+		value : "{model>/opExp}",
 		width : '100%'
 	});
 	oLabel.setLabelFor(oInput);

@@ -33,8 +33,21 @@
 //	oContentCard.createRow(new sap.ui.commons.TextView({text:"Load/Discharge 4,000MT PWWD SHINC"}));
 //	oContentCard.createRow(new sap.ui.commons.TextView({text:"FEB 1~10,2015 "}));
 //	oVCard1.setContent(oContentCard);
-	
-	oSection1.addContent(new sap.ui.commons.TextView({text:"Dolly Kansal"}));
+	var aData = [
+	             {account: "ABC", cargoName: "ABC", loading: "abc_loading", discharging:"abc_discharge"}
+	             ];
+	var oModel = new sap.ui.model.json.JSONModel();
+	oModel.setData({modelData: aData});
+	oSection1.addContent(new sap.ui.commons.TextView({text:"ABC",id:"account"}));
+	var text1 = new sap.ui.commons.TextView({text:"ABC",id:"cargoName"});
+	text1.addStyleClass("hidden");
+	oSection1.addContent(text1);
+	var text2 = new sap.ui.commons.TextView({text:"ABC_Loading",id:"loading"});
+	text2.addStyleClass("hidden");
+	oSection1.addContent(text2);
+	var text3 = new sap.ui.commons.TextView({text:"ABC_Discharge",id:"discharge"});
+	text3.addStyleClass("hidden");
+	oSection1.addContent(text3);
 	
 	//Building Section 2
 	var oSection2 = new sap.ui.commons.AccordionSection( "Demand2" );		
